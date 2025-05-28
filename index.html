@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CHOLAN MESS - GIVE REBIRTH TO YOUR TONGUE</title>
+  <style>
+    /* Reset and base */
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background: #f9f9f9;
+      color: #333;
+    }
+
+    nav {
+      background-color: #333;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    nav ul li {
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      padding: 14px 16px;
+      display: block;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      background-color: greenyellow;
+      color: black;
+      border-radius: 4px;
+    }
+
+    /* Hamburger toggle button */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      position: absolute;
+      right: 20px;
+      top: 15px;
+      width: 28px;
+      height: 22px;
+      justify-content: space-between;
+      z-index: 110;
+    }
+
+    .hamburger div {
+      background-color: white;
+      height: 3px;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    /* When hamburger active (toggle animation) */
+    .hamburger.active div:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active div:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active div:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* Responsive for ≤600px */
+    @media (max-width: 600px) {
+      nav ul {
+        flex-direction: column;
+        background-color: #333;
+        position: fixed;
+        top: 50px;
+        /* below nav height */
+        right: 0;
+        width: 200px;
+        height: calc(100vh - 50px);
+        padding-top: 20px;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+      }
+
+      nav ul.show {
+        transform: translateX(0);
+      }
+
+      nav ul li {
+        margin: 15px 0;
+        text-align: right;
+        padding-right: 20px;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      /* Hide normal menu links (nav ul) by default on mobile, show only when toggle is active */
+      nav ul li a {
+        font-size: 18px;
+      }
+    }
+
+    .cholan {
+      color: white;
+      text-align: center;
+      background-image: url('cholan.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 20px;
+      padding: 0 20px;
+    }
+
+    .cholan h1 {
+      font-size: 3em;
+      margin: 0;
+      text-shadow: 2px 2px 6px black;
+    }
+
+    .cholan h2 {
+      font-size: 1.5em;
+      margin: 0;
+      text-shadow: 1px 1px 4px black;
+      font-weight: 400;
+    }
+
+    .btn-menu {
+      background-color: greenyellow;
+      border: none;
+      padding: 15px 40px;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+      width: max-content;
+      margin: 0 auto;
+      text-decoration: none;
+      color: black;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .btn-menu:hover {
+      background-color: darkgreen;
+      color: white;
+    }
+
+    /* Universal container */
+    .container {
+      max-width: 960px;
+      margin: 60px auto;
+      background: white;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* About Us */
+    #about {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    #about .content {
+      flex: 1 1 400px;
+    }
+
+    #about h2 {
+      color: greenyellow;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .underline {
+      width: 60px;
+      height: 4px;
+      background-color: greenyellow;
+      margin-bottom: 20px;
+      border-radius: 2px;
+    }
+
+    #about p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .story-button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: 2px solid greenyellow;
+      background-color: transparent;
+      color: greenyellow;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .story-button:hover {
+      background-color: greenyellow;
+      color: #fff;
+    }
+
+    #about .image {
+      flex: 1 1 300px;
+    }
+
+    #about .image img {
+      width: 100%;
+      border-radius: 15px;
+      max-height: 400px;
+      object-fit: cover;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Section headings */
+    h2.section-title {
+      color: greenyellow;
+      font-weight: 700;
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    /* Menu, Gallery, Reviews */
+    .menu-items,
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+
+    .card h3 {
+      margin: 0;
+      color: darkgreen;
+    }
+
+    .card p {
+      margin: 0;
+      color: #555;
+    }
+
+    .gallery img {
+      border-radius: 12px;
+      height: 220px;
+      width: 100%;
+      object-fit: cover;
+      justify-self: center;
+    }
+
+    .reviews {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+    }
+
+    .reviews .card {
+      width: 320px;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .reviews p {
+      font-style: italic;
+      color: #444;
+      margin-bottom: 15px;
+    }
+
+    .reviews h4 {
+      text-align: center;
+      color: darkgreen;
+      margin: 0;
+      font-weight: 700;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #111;
+      color: white;
+      padding: 40px 20px 25px;
+      text-align: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .footer-container {
+      max-width: 700px;
+      margin: 0 auto 30px auto;
+    }
+
+    .hours-section,
+    .contact-section {
+      margin-bottom: 25px;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    footer h3 {
+      margin-bottom: 12px;
+      font-weight: 600;
+      color: #adff2f;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    footer p {
+      margin: 6px 0;
+      font-weight: 500;
+      line-height: 1.5;
+      color: #ddd;
+    }
+
+    footer strong {
+      color: #adff2f;
+    }
+
+    .footer-copyright {
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      #about {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      #about .content,
+      #about .image {
+        flex: 1 1 100%;
+      }
+
+      .menu-items,
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .reviews {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hours-section,
+      .contact-section {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="/" class="nav-link">CHOLAN MESS</a></li>
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#menu" class="nav-link">Menu</a></li>
+      <li><a href="#gallery" class="nav-link">Gallery</a></li>
+      <li><a href="#reviews" class="nav-link">Reviews</a></li>
+    </ul>
+
+    <!-- Hamburger toggle -->
+    <div class="hamburger" id="hamburger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </nav>
+
+  <section class="cholan">
+    <h1>TASTE AUTHENTIC CHETTINADU FOODS</h1>
+    <h2>GIVE REBIRTH TO YOUR TONGUE</h2>
+    <a href="#menu" class="btn-menu">OUR STORY</a>
+  </section>
+
+  <section id="about" class="container">
+    <div class="content">
+      <h2>ABOUT US</h2>
+      <div class="underline"></div>
+      <p>
+        Our mission is to serve authentic Chettinadu cuisine, known for its bold
+        flavors, aromatic spices, and traditional cooking methods. Every dish
+        is prepared with care to bring a genuine taste of Chettinadu to your
+        table.
+      </p>
+      <button class="story-button">Read More</button>
+    </div>
+    <div class="image">
+      <img src="chettinaad.jpg" alt="About Us" />
+    </div>
+  </section>
+
+  <section id="menu" class="container">
+    <h2 class="section-title">OUR MENU</h2>
+    <div class="menu-items">
+      <div class="card">
+        <img src="mutton seeragasamba biriyani.jpg" alt="Mutton seeragasamba biriyani" />
+        <h3>Mutton seeragasamba biriyani</h3>
+        <p>SPICED AND FLAVORFUL RICE WITH SOFT MUTTON</p>
+      </div>
+      <div class="card">
+        <img src="chettinaad mutton gravy.jpg" alt="Chettinaad mutton or chicken gravy" />
+        <h3>Chettinaad mutton or chicken gravy</h3>
+        <p>VERY SPICY GRAVY WITH MUTTON OR CHICKEN</p>
+      </div>
+      <div class="card">
+        <img src="boti fry.jpg" alt="Aatu kudal" />
+        <h3>Aatu kudal</h3>
+        <p>A NORMAL GRAVY MADE UP OF GOAT INTESTINE</p>
+      </div>
+      <div class="card">
+        <img src="elanipayasam.jpg" alt="Elani payasam" />
+        <h3>Elanipayasam</h3>
+        <p>A PAYASAM MADE UP OF TENDER COCONUT</p>
+      </div>
+      <div class="card">
+        <img src="pooricha pooratta.jpg" alt="Pooricha pooratta" />
+        <h3>Pooricha pooratta</h3>
+        <p>DEEP FRIED POORATTA</p>
+      </div>
+      <div class="card">
+        <img src="kizhi pooratta.jpg" alt="Kizhi pooratta" />
+        <h3>Kizhi pooratta</h3>
+        <p>A NORMAL POORATTA MARINATED IN CHICKEN OR MUTTON GRAVY</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery" class="container">
+    <h2 class="section-title">FOOD GALLERY</h2>
+    <div class="gallery">
+      <img src="pooricha pooratta.jpg" alt="pooricha pooratta" />
+      <img src="kizhi pooratta.jpg" alt="kizhi pooratta" />
+      <img src="chettinaad mutton gravy.jpg" alt="chettinaad mutton or chicken gravy" />
+      <img src="elanipayasam.jpg" alt="elanipayasam" />
+      <img src="mutton seeragasamba biriyani.jpg" alt="Mutton seeragasamba biriyani">
+      <img src="boti fry.jpg" alt="aatu kudal">
+    </div>
+  </section>
+
+  <section id="reviews" class="container">
+    <h2 class="section-title">REVIEWS</h2>
+    <div class="reviews">
+      <div class="card">
+        <p>"The best Chettinad food I've ever tasted! Highly recommend."</p>
+        <h4>spider man</h4>
+      </div>
+      <div class="card">
+        <p>"Amazing flavors and excellent service. Will come back again!"</p>
+        <h4>iron man</h4>
+      </div>
+      <div class="card">
+        <p>"Authentic taste and warm ambiance. Loved every bite."</p>
+        <h4>captain america</h4>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-container">
+      <div class="hours-section">
+        <div>
+          <h3>Hours</h3>
+          <p><strong>Monday - Saturday:</strong> 9am - 9pm</p>
+          <p><strong>Sunday:</strong> Closed</p>
+        </div>
+        <div>
+          <h3>Contact</h3>
+          <p>Phone: +91 12345 67890</p>
+          <p>Email: info@cholanmess.com</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="footer-copyright">
+      &copy; 2025 CHOLAN MESS. All rights reserved.
+    </p>
+  </footer>
+
+  <script>
+    // Hamburger toggle functionality
+    const hamburger = document.getElementById('hamburger');
+    const navUl = document.querySelector('nav ul');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navUl.classList.toggle('show');
+    });
+  </script>
+</body>
+
+</html>
